@@ -12,7 +12,7 @@ import {
   Link,
 } from "react-router-dom";
 import Posters from "./pages/Posters";
-import Footer from "./components/Footer";
+import Chating from "./components/Chating";
 import ErrorPage from "./pages/ErrorPage";
 import Poster from "./pages/Poster";
 
@@ -21,7 +21,11 @@ const DashBoard = () => {
     <div>
       <Navbar />
       <Outlet />
-      <Footer />
+    <div className="fixed bottom-4 right-4 ">
+    <Chating />
+
+    </div>
+
     </div>
   );
 };
@@ -33,7 +37,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/Home",
-        element: <Home />,
+        element: <Home/>,
       },
       {
         path: "/posters",

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import ModalPortal from "../components/ui/ModalPortal"
 function Register() {
   const navigate = useNavigate();
   const [inputs, setInputs] = useState({
@@ -66,6 +66,10 @@ function Register() {
           Do you have an account? <Link to="/login">login</Link>
         </p>
       </form>
+
+      <ModalPortal>
+        <div>asdasda</div>
+        </ModalPortal>
     </div>
   );
 }

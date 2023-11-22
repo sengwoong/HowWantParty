@@ -21,9 +21,10 @@ function Home() {
   }
 
   return (
-    
-    <div className="d-flex flex-direction-column col-lg-10 col-md-11 col-sm-12 mx-auto text-black  ">
-      <SideMenu></SideMenu>
+    <div className="d-flex flex-direction-column">
+    <SideMenu></SideMenu>
+    <div className=" col-lg-10 col-md-11 col-sm-12 mx-auto text-black  ">
+      
     
 
       <div>
@@ -41,6 +42,7 @@ function Home() {
           )}
         </ul>
       </div>
+    </div>
     </div>
   );
 }

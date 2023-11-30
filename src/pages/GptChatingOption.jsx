@@ -40,7 +40,7 @@ function Chating() {
 
     // const newUserMessage = { text: inputText, isUser: true, id: Date.now() };
     // setMessages((prevMessages) => [...prevMessages, newUserMessage]);
-    
+
     mutatePostProducts({ id: inputid, Prompt: InputPrompt, Response: inputResponse });
 
 

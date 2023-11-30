@@ -1,38 +1,64 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { ModelContext } from '../context/ModelContextProvider';
+import React, { useState, useEffect, useContext , useRef} from 'react';
 import { AuthContext } from '../context/authContext';
 import useGptChat from '../hooks/useGptChat';
 
 function Chating() {
   const [messages, setMessages] = useState([]);
   const [inputText, setInputText] = useState('');
+  const chatContainerRef = useRef(null);
+  const { gptChatData, mutatePostGptChat,refetch } = useGptChat();
+  console.log("gptChatData")
+
  
-  const { currentUser, logout } = useContext(AuthContext);
-  const {
-    gptQuery: { data: gptChat } = {}, // Use optional chaining
-  } = useGptChat();
-  console.log("gptChat");
-  console.log(gptChat);
+console.log(gptChatData)
+// gptChatData=gptChatData.conversation_list
+
+
+
+// useEffect(() => {
+//     if (gptData) {
+//       const flattenedMessages = gptData.flatMap((entry) => [
+//         { id: entry.id, text: entry.prompt, response: entry.response, type: 'prompt', isUser: true },
+//         { id: entry.id, text: entry.response, type: 'response', isUser: false },
+//       ]);
   
+//       // Sort the flattenedMessages based on the id in ascending order
+//       const sortedMessages = flattenedMessages.sort((a, b) => a.id - b.id);
+  
+//       setMessages(() => [...sortedMessages]);
+//     }
+//   }, [gptData]);
 
 
+  
+  useEffect(() => {
+    if (gptChatData) {
+      const flattenedMessages = gptChatData.conversation_list.map((entry) => [
+        { id: entry.id, text: entry.User, response: entry.response, type: 'prompt', isUser: true },
+        { id: entry.id, text: entry.Ai, type: 'response', isUser: false },
+      ]);
 
-  let isUser = true;
+      // Flatten the array of arrays into a single array
+      const sortedMessages = flattenedMessages.flat().sort((a, b) => a.id - b.id);
 
-  const isMe = currentUser?.user.email
-  // console.log(currentUser)
-  const handleSendMessage = () => {
+      setMessages([...sortedMessages]);
+      console.log("messages");
+      console.log(messages);
+    }
+  }, [gptChatData]);
+
+  useEffect(() => {
+    // Scroll to the bottom of the chat window
+    chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+  }, [messages]);
+
+  const handleSendMessage = async() => {
     if (inputText.trim() === '') {
       return;
     }
 
-    const newMessage = { text: inputText, isUser, id: Date.now() };
-    if (messages === null) {
-      setMessages([newMessage]);
-    } else {
-      setMessages((prevMessages) => [...prevMessages, newMessage]);
-    }
-
+    await mutatePostGptChat({ id: "as", Prompt: inputText });
+    refetch()
     setInputText('');
   };
 
@@ -40,71 +66,41 @@ function Chating() {
     setInputText(event.target.value);
   };
 
-  const getMessageStyle = (isUser) => {
-    const baseMessageStyle = 'p-2 mb-2 rounded shadow-md';
-    const baseProfileStyle = 'w-8 h-8 bg-black rounded flex-shrink-0 align-middle self-center shadow-md';
-    const baseChatStyle = 'flex';
-    return isUser
-      ? {
-          message: `${baseMessageStyle} bg-blue-500 text-white text-right w-fit-content`,
-          profile: `${baseProfileStyle} ml-2`,
-          chat: `${baseChatStyle} justify-end`,
-        }
-      : {
-          message: `${baseMessageStyle} bg-gray-200 text-left w-fit-content`,
-          profile: `${baseProfileStyle} mr-2`,
-          chat: `${baseChatStyle} justify-start`,
-        };
-  };
-
-  const displayUser = (isUser) => {
-    return isUser
-      ? { falseProfile: 0, content: 1, lastProfile: 1 }
-      : { falseProfile: 1, content: 1, lastProfile: 0 };
-  };
-
   return (
     <>
-
-        (
-        <div className="m-auto w-95vw h-screen mx-auto border border-gray-300 rounded p-2 bg-gray-500">
- 
-          <div className="h-[85vh] overflow-y-scroll">
-            {messages.map((message) => (
-              <div key={message.id} className={getMessageStyle(message.isUser).chat}>
-                {displayUser(message.isUser).falseProfile === 1 && (
-                  <div className={getMessageStyle(message.isUser).profile}>{messages}</div>
-                )}
-                {displayUser(message.isUser).content === 1 && (
-                  <div
-                    className={getMessageStyle(message.isUser).message}
-                    style={{ borderColor: message.isAdmin ? 'gold' : 'inherit' }}
-                  >
-                    {message.text}
-                  </div>
-                )}
-                {displayUser(message.isUser).lastProfile === 1 && (
-                  <div className={getMessageStyle(message.isUser).profile}></div>
-                )}
-              </div>
-            ))}
-          </div>
-          <div className="w-[92vw] h-[50px] bottom-0  flex m-auto">
-            <input
-              type="text"
-              value={inputText}
-              onChange={handleInputChange}
-              className="flex-1 border rounded-l p-2"
-            />
-            <button
-              onClick={handleSendMessage}
-              className="bg-blue-500 text-white rounded-r p-2 it"
+      <div className="m-auto w-95vw h-screen mx-auto border border-gray-300 rounded p-2 bg-gray-500">
+        <div className="h-[75vh] w-[95vh] overflow-y-scroll mx-auto" ref={chatContainerRef}>
+          {messages.map((message) => (
+            <div
+              key={`${message.id}-${message.type}`}
+              className={message.type === 'response' ? 'flex justify-start' : 'flex justify-end'}
+              onClick={() => handleClick(message.id, message.text, message.response, message.type)}
             >
-              Send
-            </button>
-          </div>
+              <div
+                className={
+                  message.isUser
+                    ? 'mr-0 p-2 mb-2 rounded shadow-md bg-blue-500 text-white text-right w-fit-content'
+                    : 'p-2 mb-4 rounded shadow-md bg-gray-200 text-left w-fit-content'
+                }
+                style={{ borderColor: message.isAdmin ? 'gold' : 'inherit', maxWidth: '75%' }}
+              >
+                {message.text}
+              </div>
+            </div>
+          ))}
         </div>
-      )
+        <div className="w-[92vw] h-[50px] bottom-0  flex m-auto">
+          <input
+            type="text"
+            value={inputText}
+            onChange={handleInputChange}
+            className="flex-1 border rounded-l p-2"
+          />
+          <button onClick={handleSendMessage} className="bg-blue-500 text-white rounded-r p-2">
+            Send
+          </button>
+        </div>
+      </div>
     </>
   );
 }

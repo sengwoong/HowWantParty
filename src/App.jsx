@@ -3,7 +3,8 @@ import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Navbar from "./components/Navbar";
-
+import GptChating from "./pages/GptChating";
+import GptChatingOption from "./pages/GptChatingOption";
 import {
   createBrowserRouter,
   RouterProvider,
@@ -15,6 +16,9 @@ import Posters from "./pages/Posters";
 import Chating from "./components/Chating";
 import ErrorPage from "./pages/ErrorPage";
 import Poster from "./pages/Poster";
+
+
+
 
 const DashBoard = () => {
   return (
@@ -40,8 +44,24 @@ const router = createBrowserRouter([
         element: <Home/>,
       },
       {
-        path: "/posters",
-        element: <Posters />,
+        path: "/Chating",
+        element: <div className="w-screen h-screen"><GptChating/>,</div>
+      },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/register",
+        element: <Register />,
+      },
+      {
+        path: "/ChatingGpt",
+        element: <GptChatingOption/>,
+      },
+      {
+        path: "*",
+        element: <ErrorPage />,
       },
     ],
   },
@@ -49,19 +69,7 @@ const router = createBrowserRouter([
     path: "/poster/:id",
     element: <Poster />,
   },
-
-  {
-    path: "/register",
-    element: <Register />,
-  },
-  {
-    path: "/login",
-    element: <Login />,
-  },
-  {
-    path: "*",
-    element: <ErrorPage />,
-  },
+ 
 ]);
 
 function App() {

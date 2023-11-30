@@ -19,7 +19,7 @@ function SlideMenuContent({ children ,isInside,showMenu,toggleMenu}) {
 <div className={`fixed top-0 left-0 flex   z-50
   transition-transform duration-500 transform ${showMenu ? '-translate-x-full' : 'translate-x-0'}`}
 >
-  <div className="flex bg-white w-screen h-screen md:w-[420px] bg-white">
+  <div className="flex bg-white w-screen h-screen md:w-[420px] ">
 <div className="w-full">
         {/* 애는 오른쪽으로 짝 붙어야함 무조권임 */}
         {/* x포지션 내부 */}

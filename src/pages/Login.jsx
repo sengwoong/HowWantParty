@@ -24,10 +24,10 @@ function Login() {
     }
     try {
      
-      
+      console.log(formData.passwod)
       await login({
         "email": formData.email,
-        "password": formData.UserPw,
+        "password": formData.password,
       });
 
       

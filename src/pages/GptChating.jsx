@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext , useRef} from 'react';
 import { AuthContext } from '../context/authContext';
+
 import useGptChat from '../hooks/Gpt/useGptChat';
 
 function Chating({id}) {
@@ -7,6 +8,7 @@ function Chating({id}) {
   const [inputText, setInputText] = useState('');
   const chatContainerRef = useRef(null);
   const { gptChatData, mutatePostGptChat,refetch } = useGptChat({id:"ac224"});
+
   console.log("gptChatData")
 
  
@@ -57,7 +59,9 @@ console.log(gptChatData)
       return;
     }
 
-    await mutatePostGptChat({  Prompt: inputText });
+
+    await mutatePostGptChat({ id: "as", Prompt: inputText });
+    refetch()
 
     setInputText('');
   };

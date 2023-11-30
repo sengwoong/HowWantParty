@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
+
 import useGptChatOptions from '../hooks/Gpt/useGptChatOptions';
+
 import { isNumber } from '../../utils/Validation';
 
 function Chating() {
@@ -9,6 +11,7 @@ function Chating() {
   const [inputid, setInputId] = useState('');
   const [selectedMessage, setSelectedMessage] = useState(null);
   const [selectedType, setSelectedType] = useState(null);
+
 
   const { gptData, mutatePutGptOption } = useGptChatOptions();
 
@@ -41,8 +44,10 @@ function Chating() {
     // const newUserMessage = { text: inputText, isUser: true, id: Date.now() };
     // setMessages((prevMessages) => [...prevMessages, newUserMessage]);
 
+
     mutatePutGptOption({ id: inputid, Prompt: InputPrompt, Response: inputResponse });
     setSelectedMessage({})
+
 
     // You might want to call the GPT API here to get a response
     // and then add it to the state similar to the GPT messages above.

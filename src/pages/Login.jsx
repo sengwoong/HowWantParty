@@ -1,48 +1,51 @@
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { AuthContext } from "../context/authContext";
+import { AuthContext } from "../context/AuthContext";
+import { Notification } from "../context/NotificationProvider";
+
 import { useForm } from "react-hook-form";
 import InputField from "../components/react-hook-form-Filed/InputField";
 import { isValidEmail } from "../../utils/Validation";
+import TopRightNotification from "../components/CustomAlert/TopRightNotification";
 
 function Login() {
   const navigate = useNavigate();
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const [noticeMessage, setNoticeMessage] = useState({
-    message: "",
-    type: "",
-  });
 
-  const { login,isLogin } = useContext(AuthContext); // Move useContext hook outside
+  const { toggleNotification, setMessage, setType } = useContext(Notification); 
+  
+  const { login } = useContext(AuthContext); // Move useContext hook outside
 
   const onSubmit = async (formData) => {
     if(!isValidEmail(formData.email)){
-      setNoticeMessage({
-        message: `유효하지 않은 이메일 `,
-        type: "error",
-      });
+
+      setMessage(`유효하지 않은 이메일 `)
+      setType("error")
+      toggleNotification()
     }
     try {
      
       console.log(formData.passwod)
-      await login({
+      const res = await login({
         "email": formData.email,
         "password": formData.password,
-      });
+      })
 
+
+      
+      if (res.status === 200) {
+        navigate('/home');
+      }
       
       
     } catch (error) {
-      setNoticeMessage({
-        message: `회원가입 실패: ${error.message}`,
-        type: "error",
-      });
-      console.error("Registration failed:", error.message);
+
+      setMessage( `회원가입 실패: ${error.message}`,)
+      setType("error")
+      toggleNotification()
+    
     } finally {
 
-      if(!isLogin()){
-        navigate('/home')
-     }
     }
   };
 
@@ -74,14 +77,7 @@ function Login() {
       </p>
     </div>
 
-    {noticeMessage.message !== ""  && (
-
-<TopRightNotification
-  message={noticeMessage.message}
-  type={noticeMessage.type}
-/>
-
-)}
+  
     </div>
     </div>
     </div>

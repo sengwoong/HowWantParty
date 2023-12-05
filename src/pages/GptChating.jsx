@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext , useRef} from 'react';
-import { AuthContext } from '../context/authContext';
+import { AuthContext } from '../context/AuthContext';
 
 import useGptChat from '../hooks/Gpt/useGptChat';
 

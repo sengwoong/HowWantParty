@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { ModelContext } from '../context/ModelContextProvider';
-import { AuthContext } from '../context/authContext';
+import { AuthContext } from '../context/AuthContext';
 
 function Chating() {
   const [messages, setMessages] = useState([]);

@@ -8,12 +8,14 @@ import SelectField from "../components/react-hook-form-Filed/SelectField";
 import ModalPortal from "../components/ui/ModalPortal";
 import TopRightNotification from "../components/CustomAlert/TopRightNotification";
 import InputFieldOtion from "../components/react-hook-form-Filed/InputFieldOtion";
-import { AuthContext } from "../context/authContext";
+import { AuthContext } from "../context/AuthContext";
 import { isValidEmail } from "../../utils/Validation";
+import { Notification } from "../context/NotificationProvider";
 
 function Register() {
  
 
+  const { toggleNotification, setMessage, setType } = useContext(Notification); 
   
   const { register, handleSubmit, formState: { errors } } = useForm();
   const { registerUser ,isLogin} = useContext(AuthContext); // Move useContext hook outside
@@ -28,26 +30,27 @@ const onSubmit = async (formData) => {
   try {
     let hasError = false;
     if (!formData.email) {
-      setNoticeMessage({
-        message: "이메일은 필수입니다.",
-        type: "error",
-      });
+
+      setMessage(`이메일은 필수입니다.`)
+      setType("error")
+      toggleNotification()
+
+  
       hasError = true;
     }
 
     if (!isValidEmail(formData.email)) {
-      setNoticeMessage({
-        message: `유효하지 않은 이메일 `,
-        type: "error",
-      });
+      setMessage(`유효하지 않은 이메일.`)
+      setType("error")
+      toggleNotification()
       hasError = true;
     }
 
     if (formData.password1 !== formData.password2) {
-      setNoticeMessage({
-        message: "비밀번호가 다릅니다.",
-        type: "error",
-      });
+      setMessage(`비밀번호가 다릅니다.`)
+      setType("error")
+      toggleNotification()
+  
       hasError = true;
     }
 
@@ -60,10 +63,12 @@ const onSubmit = async (formData) => {
       console.log("Registration successful!");
     }
   } catch (error) {
-    setNoticeMessage({
-      message: `회원가입 실패: ${error.message}`,
-      type: "error",
-    });
+
+      setMessage(`회원가입 실패: ${error.message}`)
+      setType("error")
+      toggleNotification()
+     
+
     console.error("Registration failed:", error.message);
   } finally {
     // 모달을 닫습니다.
@@ -136,13 +141,13 @@ const onSubmit = async (formData) => {
       {/* 에러 메시지가 비어 있지 않으면 출력 */}
       {noticeMessage.message !== ""  && (
 
-<ModalPortal>
+
           <TopRightNotification
             message={noticeMessage.message}
             type={noticeMessage.type}
           />
 
-</ModalPortal>
+
       )}
 
       {/* 성공 메시지가 비어 있지 않으면 출력 */}

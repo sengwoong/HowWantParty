@@ -38,8 +38,10 @@ const TopRightNotification = ({ message, type = "info" }) => {
   });
 
   return (
+<ModalPortal>
+    <ToastContainer />
+</ModalPortal>
 
-        <ToastContainer />
 
 
 

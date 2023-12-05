@@ -16,6 +16,7 @@ import Posters from "./pages/Posters";
 import Chating from "./components/Chating";
 import ErrorPage from "./pages/ErrorPage";
 import Poster from "./pages/Poster";
+import TopRightNotification from "./components/CustomAlert/TopRightNotification";
 
 
 
@@ -27,6 +28,7 @@ const DashBoard = () => {
       <Outlet />
     <div className="fixed bottom-4 right-4 ">
     <Chating />
+    <TopRightNotification/>
 
     </div>
 

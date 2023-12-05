@@ -22,6 +22,7 @@ function Login() {
       setMessage(`유효하지 않은 이메일 `)
       setType("error")
       toggleNotification()
+      return
     }
     try {
      

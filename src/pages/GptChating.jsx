@@ -9,40 +9,14 @@ function Chating({id}) {
   const chatContainerRef = useRef(null);
   const { gptChatData, mutatePostGptChat,refetch } = useGptChat({id:"ac224"});
 
-  console.log("gptChatData")
-
- 
-console.log(gptChatData)
-// gptChatData=gptChatData.conversation_list
-
-
-
-// useEffect(() => {
-//     if (gptData) {
-//       const flattenedMessages = gptData.flatMap((entry) => [
-//         { id: entry.id, text: entry.prompt, response: entry.response, type: 'prompt', isUser: true },
-//         { id: entry.id, text: entry.response, type: 'response', isUser: false },
-//       ]);
-  
-//       // Sort the flattenedMessages based on the id in ascending order
-//       const sortedMessages = flattenedMessages.sort((a, b) => a.id - b.id);
-  
-//       setMessages(() => [...sortedMessages]);
-//     }
-//   }, [gptData]);
-
-
-  
   useEffect(() => {
     if (gptChatData) {
       const flattenedMessages = gptChatData.conversation_list.map((entry) => [
         { id: entry.id, text: entry.User, response: entry.response, type: 'prompt', isUser: true },
         { id: entry.id, text: entry.Ai, type: 'response', isUser: false },
       ]);
-
       // Flatten the array of arrays into a single array
       const sortedMessages = flattenedMessages.flat().sort((a, b) => a.id - b.id);
-
       setMessages([...sortedMessages]);
       console.log("messages");
       console.log(messages);
@@ -58,7 +32,6 @@ console.log(gptChatData)
     if (inputText.trim() === '') {
       return;
     }
-
 
     await mutatePostGptChat({ id: "as", Prompt: inputText });
     refetch()

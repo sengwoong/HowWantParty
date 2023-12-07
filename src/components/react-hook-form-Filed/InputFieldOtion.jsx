@@ -8,7 +8,6 @@ const InputFieldOtion = ({ label, name, register, errors, placeholder,option }) 
       <div>{label === 'ID' && <div className="btn btn-primary btn-block">{option}</div>}</div>
     </div>
 
-    
     <input
       {...register(name, { required: true })}
       className={`form-control ${errors[name] ? 'is-invalid' : ''}`}

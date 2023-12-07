@@ -8,25 +8,6 @@ import useProducts from "../hooks/useProducts";
 import SideMenu from "../components/Slider/SideMenu";
 
 function Home() {
-  // const {
-  //   productsQuery: { isLoading, error, data: products },
-  // } = useProducts();
-
-  // console.log(products);
-
-  // if (isLoading) {
-  //   return <div>Loading...</div>;
-  // }
-
-  // if (error) {
-  //   return <div>Error: {error.message}</div>;
-  // }
-
-  // // Check if products and products.items exist
-  // if (!products || !products.items) {
-  //   return <div>Error: Invalid video data</div>;
-  // }
-
   return (
     <div className="d-flex flex-direction-column">
       <SideMenu></SideMenu>

@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import InputField from "../components/react-hook-form-Filed/InputField";
 import SelectField from "../components/react-hook-form-Filed/SelectField";
 import ModalPortal from "../components/ui/ModalPortal";
-import TopRightNotification from "../components/CustomAlert/TopRightNotification";
+
 import InputFieldOtion from "../components/react-hook-form-Filed/InputFieldOtion";
 import { AuthContext } from "../context/AuthContext";
 import { isValidEmail } from "../../utils/Validation";
@@ -114,12 +114,7 @@ function Register() {
         </div>
       </div>
 
-      {noticeMessage.message !== "" && (
-        <TopRightNotification
-          message={noticeMessage.message}
-          type={noticeMessage.type}
-        />
-      )}
+    
     </div>
   );
 }

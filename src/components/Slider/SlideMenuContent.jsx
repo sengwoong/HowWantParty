@@ -13,7 +13,7 @@ import SliderButton from './SliderButton';
 function SlideMenuContent({ children, isInside, showMenu, toggleMenu }) {
   return (
     <>
-      <div className={`fixed top-0 left-0 flex z-50 transition-transform duration-500 transform ${showMenu ? '-translate-x-full' : 'translate-x-0'}`}>
+      <div className={`fixed top-0 left-0 flex z-20 transition-transform duration-500 transform ${showMenu ? '-translate-x-full' : 'translate-x-0'}`}>
         <div className="flex bg-white w-screen h-screen md:w-[420px]">
           <div className="w-full">
             {/* 내부 메뉴 디자인 */}

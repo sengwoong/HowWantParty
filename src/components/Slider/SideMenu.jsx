@@ -1,19 +1,19 @@
 import React from 'react';
-import { useEffect, useState } from 'react';
-import { FaBars, FaTimes } from 'react-icons/fa';
+import {  useState } from 'react';
 import SliderButton from './SliderButton';
 import SlideMenuContent from './SlideMenuContent';
-import useWindowSize from '../../hooks/useWindowSize';
+import useWindowSize from '../../hooks/useWindowSzie';
+import SideBackDesign from './SideBackDesign';
 
-// Define GridItem component
-const GridItem = ({ color }) => (
-  <div className={`grid-item ${color}`}></div>
-);
+import MenuItem from './MenuItem';
+
+
+
+
 
 function SideMenu() {
   const [showMenu, setShowMenu] = useState(true);
   const { screenSize } = useWindowSize();
-  const colors = ['bg-white', 'bg-red-500', 'bg-blue-500', 'bg-white'];
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
@@ -41,12 +41,20 @@ function SideMenu() {
         </>
       )}
 
-      <SlideMenuContent isInside={["md", "sm"].includes(screenSize) ? "inside" : "outside"} showMenu={showMenu} toggleMenu={toggleMenu}>
-        <div className="grid grid-cols-2 h-full">
-          {Array.from({ length: 8 }, (_, index) => (
-            <GridItem key={index} color={colors[index % colors.length]} />
-          ))}
-        </div>
+      <SlideMenuContent className="relative" isInside={["md", "sm"].includes(screenSize) ? "inside" : "outside"} showMenu={showMenu} toggleMenu={toggleMenu}>
+    
+        <SideBackDesign></SideBackDesign>
+        <div className='absolute z-40 left-1/2 transform -translate-x-1/2 text-center'>
+        <MenuItem text="파티는 여기로" textDesign="text-3xl"  herf="/home" />
+        <MenuItem text="파티신청" textDesign="text-2xl"  herf="/home" />
+        <MenuItem text="파티등록" textDesign="text-xl"  herf="/home" />
+        <MenuItem text="채팅" textDesign="text-3xl"  herf="/home" />
+        <MenuItem text="채팅 열기" textDesign="text-2xl"  herf="/home" />
+        <MenuItem text="채팅 닫기" textDesign="text-xl"  herf="/home" />
+        <MenuItem text="상품" textDesign="text-3xl"  herf="/home" />
+        <MenuItem text="전체 상품" textDesign="text-2xl"  herf="/home" />
+        <MenuItem text="찜한 상품" textDesign="text-xl"  herf="/home" />
+    </div>
       </SlideMenuContent>
     </>
   );

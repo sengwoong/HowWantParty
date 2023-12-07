@@ -16,8 +16,6 @@ export const AuthContextProvider = ({ children }) => {
       console.log(res.data);
       setCurrentUser(res.data);
 
-     
-
     } catch (error) {
       console.error("Login failed:", error.message);
     }

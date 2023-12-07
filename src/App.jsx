@@ -3,7 +3,7 @@ import { createBrowserRouter, RouterProvider, Outlet, Route } from "react-router
 import React from "react";
 import Navbar from "./components/Navbar";
 import Chating from "./components/Chating";
-import TopRightNotification from "./components/CustomAlert/TopRightNotification";
+
 import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
@@ -20,7 +20,6 @@ const DashBoard = () => {
       <Outlet />
       <div className="fixed bottom-4 right-4 ">
         <Chating />
-        <TopRightNotification />
       </div>
     </div>
   );

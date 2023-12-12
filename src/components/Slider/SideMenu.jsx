@@ -32,17 +32,16 @@ function SideMenu() {
         </>
       ) : (
         <>
-          <div className="shadow-[20px_0px_60px_0px_rgba(0,0,0,0.3)] w-24">
+<div className="w-24  ">
             {/* 햄버거 버튼 가운데 정렬 */}
-            <div className="flex mt-4 justify-center h-full">
+            <div className="flex mt-4 justify-center h-full   ">
               <SliderButton showMenu={showMenu} toggleMenu={toggleMenu} isOpen="open" />
             </div>
           </div>
         </>
       )}
 
-      <SlideMenuContent className="relative" isInside={["md", "sm"].includes(screenSize) ? "inside" : "outside"} showMenu={showMenu} toggleMenu={toggleMenu}>
-    
+<SlideMenuContent className="relative" isInside={["md", "sm"].includes(screenSize) ? "inside" : "outside"} showMenu={showMenu} toggleMenu={toggleMenu}>
         <SideBackDesign></SideBackDesign>
         <div className='absolute z-40 left-1/2 transform -translate-x-1/2 text-center'>
         <MenuItem text="파티는 여기로" textDesign="text-3xl"  herf="/home" />
@@ -61,3 +60,4 @@ function SideMenu() {
 }
 
 export default SideMenu;
+

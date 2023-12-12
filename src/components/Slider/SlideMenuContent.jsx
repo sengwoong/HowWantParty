@@ -18,7 +18,7 @@ function SlideMenuContent({ children, isInside, showMenu, toggleMenu }) {
           <div className="w-full">
             {/* 내부 메뉴 디자인 */}
             <div className="mt-8" />
-            <div className="w-full flex justify-end">
+            <div className="w-full flex justify-end z-50">
               {isInside === "inside" ? <SliderButton showMenu={showMenu} toggleMenu={toggleMenu} isOpen="close" /> : <></>}
             </div>
             {/* 박스 메뉴 소메뉴 2개씩 나누어서 색깔을 번갈아가는 메뉴 */}
@@ -26,7 +26,7 @@ function SlideMenuContent({ children, isInside, showMenu, toggleMenu }) {
           </div>
         </div>
         {/* 외부 메뉴 디자인 */}
-        <div className="mt-8">
+        <div className="mt-8 z-50">
           {isInside === "outside" ? <SliderButton showMenu={showMenu} toggleMenu={toggleMenu} isOpen="close" /> : <></>}
         </div>
       </div>
